@@ -4,21 +4,20 @@ public class Livro {
     private String titulo;
     private String autor;
     private String genero;
-    private String ano;
+    private String anoPublicacao;
     private String edicao;
 
-    public Livro(String titulo, String autor, String genero, String ano, String edicao) {
+    public Livro(String titulo, String autor, String genero, String anoPublicacao, String edicao) {
         this.titulo = titulo;
         this.autor = autor;
         this.genero = genero;
-        this.ano = ano;
+        this.anoPublicacao = anoPublicacao;
         this.edicao = edicao;
     }
 
-    public Livro(String titulo, String autor, String genero) {
+    public Livro(String titulo, String autor) {
         this.titulo = titulo;
         this.autor = autor;
-        this.genero = genero;
     }
 
     public String getTitulo() {
@@ -45,12 +44,12 @@ public class Livro {
         this.genero = genero;
     }
 
-    public String getAno() {
-        return ano;
+    public String getAnoPublicacao() {
+        return anoPublicacao;
     }
 
-    public void setAno(String ano) {
-        this.ano = ano;
+    public void setAnoPublicacao(String anoPublicacao) {
+        this.anoPublicacao = anoPublicacao;
     }
 
     public String getEdicao() {
@@ -59,5 +58,14 @@ public class Livro {
 
     public void setEdicao(String edicao) {
         this.edicao = edicao;
+    }
+
+    @Override
+    public String toString() {
+        return "titulo='" + titulo + '\'' +
+                ", autor ='" + autor + '\'' +
+                ", genero ='" + genero + '\'' +
+                ", Ano de publicacao ='" + anoPublicacao + '\'' +
+                ", edicao do livro ='" + edicao + '\'';
     }
 }

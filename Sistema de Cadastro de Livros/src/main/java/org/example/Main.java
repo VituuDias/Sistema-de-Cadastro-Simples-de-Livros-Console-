@@ -1,10 +1,36 @@
 package org.example;
 
+import javax.swing.text.LabelView;
+import java.util.List;
 import java.util.Scanner;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
+
+    public static void adicionarLivroConsole(Scanner scanner, GerenciadorDeLivros gerenciadorDeLivros){
+        System.out.println("\n----Adicionar novo Livro----");
+
+        System.out.print("Titulo: ");
+        String titulo = scanner.nextLine();
+        System.out.print("Autor: ");
+        String autor = scanner.nextLine();
+        System.out.print("Gênero: ");
+        String genero = scanner.nextLine();
+        System.out.print("Ano de publicacao: ");
+        String anoPublicacao = scanner.nextLine();
+        System.out.print("Edição: ");
+        String edicao = scanner.nextLine();
+
+        try{
+            Livro novoLivro = new Livro(titulo, autor, genero, anoPublicacao, edicao);
+            gerenciadorDeLivros.adicionarLivro(novoLivro);
+            System.out.println("Livro ' " + titulo + " ' adicionado com sucesso");
+        }catch(IllegalArgumentException e){
+            System.out.println("Erro de validação: " + e.getMessage());
+        }
+
+    }
 
     public static void menuPrincipal() {
         System.out.println("--- Bem vindo ao Sistema de Cadastro de Livros! ---");
@@ -20,27 +46,43 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        Scanner opcaoMenu = new Scanner(System.in);
+        Livro livro;
+        GerenciadorDeLivros gerenciador = new GerenciadorDeLivros();
+        Scanner scanner = new Scanner(System.in);
+
         int opcao;
         do {
             menuPrincipal();
-            if (opcaoMenu.hasNextInt()) {
-                opcao = opcaoMenu.nextInt();
+            if (scanner.hasNextInt()) {
+                opcao = scanner.nextInt();
+
+                // LIMPEZA DO BUFFER
+                scanner.nextLine();
+
             } else {
                 // Lidar com entradas não-inteiras para evitar loop infinito
                 System.out.println("\nEntrada inválida. Por favor, digite um número inteiro.\n");
-                opcaoMenu.next();
+                scanner.next();
                 opcao = 0;
             continue;
             }
             switch (opcao) {
                 case 1:
                     System.out.println("\n--- Opção 1: Cadastrar livro ---\n");
-
+                    adicionarLivroConsole(scanner, gerenciador);
                     break;
                 case 2:
                     System.out.println("\n--- Opção 2: Listar livros ---\n");
 
+                    List<Livro> livros = gerenciador.listarTodos();
+                    //valida livro
+                    if(livros.isEmpty()){
+                        System.out.println("Nenhum livro cadastrado.\n");
+                    }
+                    for (int i = 0; i < livros.size(); i++) {
+                        Livro l = livros.get(i);
+                        System.out.println((i + 1) + ". " + l);
+                    }
                     break;
                 case 3:
                     System.out.println("\n--- Opção 3: Remover Livro por número na lista ---\n");
@@ -67,6 +109,6 @@ public class Main {
                     break;
             }
         } while (opcao != 7);
-        opcaoMenu.close();
+        scanner.close();
     }
 }
