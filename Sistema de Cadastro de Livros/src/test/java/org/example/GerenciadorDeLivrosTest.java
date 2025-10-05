@@ -3,7 +3,7 @@ package org.example;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -84,7 +84,7 @@ public class GerenciadorDeLivrosTest {
         gerenciador.adicionarLivro(l1);
         gerenciador.adicionarLivro(l2);
 
-        List<Livro> livroListados = gerenciador.listarTodos();
+        Set<Livro> livroListados = gerenciador.listarTodos();
 
         assertEquals(2, livroListados.size(),
                 "A lista deve conter dois livros após a adição.");

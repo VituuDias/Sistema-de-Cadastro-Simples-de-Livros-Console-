@@ -25,7 +25,6 @@ public class Main {
         try{
             Livro novoLivro = new Livro(titulo, autor, genero, anoPublicacao, edicao);
             gerenciadorDeLivros.adicionarLivro(novoLivro);
-            System.out.println("Livro ' " + titulo + " ' adicionado com sucesso");
         }catch(IllegalArgumentException e){
             System.out.println("Erro de validação: " + e.getMessage());
         }
@@ -33,7 +32,7 @@ public class Main {
     }
 
     public static void menuPrincipal() {
-        System.out.println("--- Bem vindo ao Sistema de Cadastro de Livros! ---");
+        System.out.println("\n--- Bem vindo ao Sistema de Cadastro de Livros! ---");
         System.out.println("A seguir estão as opções disponíveis: ");
         System.out.println("1 - Cadastrar livro");
         System.out.println("2 - Listar livros");
@@ -46,7 +45,6 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        Livro livro;
         GerenciadorDeLivros gerenciador = new GerenciadorDeLivros();
         Scanner scanner = new Scanner(System.in);
 
@@ -73,23 +71,36 @@ public class Main {
                     break;
                 case 2:
                     System.out.println("\n--- Opção 2: Listar livros ---\n");
-
-                    List<Livro> livros = gerenciador.listarTodos();
-                    //valida livro
-                    if(livros.isEmpty()){
-                        System.out.println("Nenhum livro cadastrado.\n");
-                    }
-                    for (int i = 0; i < livros.size(); i++) {
-                        Livro l = livros.get(i);
-                        System.out.println((i + 1) + ". " + l);
-                    }
+                    gerenciador.exibirLivrosNumerados();
                     break;
                 case 3:
                     System.out.println("\n--- Opção 3: Remover Livro por número na lista ---\n");
+                    if(gerenciador.listarTodos().isEmpty()){
+                        System.out.println("Não há livros para remover");
+                        return;
+                    }
 
+                    System.out.println("Lista de livros para remover: ");
+                    gerenciador.exibirLivrosNumerados();
+
+                    System.out.print("\nDigite o indice do livro que deseja remover: ");
+                    int indice = scanner.nextInt();
+                    scanner.nextLine(); // limpar o buffer
+
+                    gerenciador.removerLivroPorNumeroNaLista(indice);
                     break;
                 case 4:
                     System.out.println("\n--- Opção 4: Remover Livro por autor ---\n");
+                    if(gerenciador.listarTodos().isEmpty()){
+                        System.out.println("Não há livros para remover");
+                        return;
+                    }
+                    System.out.println("Lista de livros para remover: ");
+                    gerenciador.exibirLivrosNumerados();
+
+                    System.out.print("Digite o autor que deseja remover: ");
+                    String autor = scanner.nextLine();
+                    gerenciador.removerLivroPorAutor(autor);
 
                     break;
                 case 5:

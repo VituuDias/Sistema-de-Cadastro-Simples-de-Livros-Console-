@@ -1,5 +1,7 @@
 package org.example;
 
+import java.util.Objects;
+
 public class Livro {
     private String titulo;
     private String autor;
@@ -8,16 +10,16 @@ public class Livro {
     private String edicao;
 
     public Livro(String titulo, String autor, String genero, String anoPublicacao, String edicao) {
-        this.titulo = titulo;
-        this.autor = autor;
+        validarENormalizar(titulo, autor);
         this.genero = genero;
         this.anoPublicacao = anoPublicacao;
         this.edicao = edicao;
+
+
     }
 
     public Livro(String titulo, String autor) {
-        this.titulo = titulo;
-        this.autor = autor;
+        validarENormalizar(titulo, autor);
     }
 
     public String getTitulo() {
@@ -67,5 +69,31 @@ public class Livro {
                 ", genero ='" + genero + '\'' +
                 ", Ano de publicacao ='" + anoPublicacao + '\'' +
                 ", edicao do livro ='" + edicao + '\'';
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(titulo.toLowerCase(), autor.toLowerCase());
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(this == obj) return true;
+        if(obj == null || getClass() != obj.getClass()) return false;
+        Livro livro = (Livro) obj;
+        return titulo.equalsIgnoreCase(livro.titulo) &&
+                autor.equalsIgnoreCase(livro.autor);
+    }
+
+    private void validarENormalizar(String titulo, String autor) {
+        if (titulo == null || titulo.trim().isEmpty()) {
+            throw new IllegalArgumentException("O título do Livro é obrigatório");
+        }
+        if (autor == null || autor.trim().isEmpty()) {
+            throw new IllegalArgumentException("O autor do Livro é obrigatório");
+        }
+
+        this.titulo = titulo.trim();
+        this.autor = autor.trim();
     }
 }
